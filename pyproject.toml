@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "speech"
+version = "0.1.0"
+description = ""
+authors = ["Horrorzero <Your Email>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = "^3.3.0"
+python-dotenv = "^1.0.1"
+assemblyai = "^0.20.2"
+gtts = "^2.5.1"
+pycountry = "^23.12.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
