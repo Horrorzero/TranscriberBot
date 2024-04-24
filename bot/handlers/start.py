@@ -2,25 +2,29 @@ from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 
-from bot.keyboards import menu
+from bot.bot import bot
 
-from bot.config import bot
 
+GREET_STICKER_ID = (
+    "CAACAgIAAxkBAAEL9q9mJQ8UnTHaJH4wZhJselG3OaocfQACBAEAAladvQreBNF6Zmb3bDQE"
+)
 
 router = Router()
 
+
 @router.message(CommandStart())
 async def start(message: Message):
-    await bot.send_sticker(message.from_user.id,
-                           sticker='CAACAgIAAxkBAAEL9q9mJQ8UnTHaJH4wZhJselG3OaocfQACBAEAAladvQreBNF6Zmb3bDQE')
-    
+    await bot.send_sticker(message.chat.id, sticker=GREET_STICKER_ID)
+
     lines = [
-        f"Вітаю, {message.from_user.first_name}.",
         "Я - Transcriber Bot, тут Ви можете конвертувати голосовий запис в текст і навпаки",
-        "Щоб ознайомитись з командами введіть команду /help"
+        "Щоб ознайомитись з командами введіть команду /help",
     ]
-    
+
+    if message.from_user is not None:
+        lines.insert(0, f"Вітаю, {message.from_user.first_name}.")
+
     await message.reply(
-        text='\n'.join(lines),
+        text="\n".join(lines),
     )
     
