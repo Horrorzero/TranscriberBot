@@ -6,7 +6,7 @@ load_dotenv()
 
 #converting voice message to text
 
-def audio_to_text(file,lang):
+def STT(file,lang):
     aai.settings.api_key = os.environ.get('API_TOKEN')
 
     FILE_URL = file

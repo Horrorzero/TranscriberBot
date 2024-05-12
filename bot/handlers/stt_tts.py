@@ -5,10 +5,9 @@ from aiogram.fsm.context import FSMContext
 
 from bot.utils.filter import Voice
 from bot.utils.filter import Checker
-from bot.utils.stt import audio_to_text
-from bot.utils.tts import TTS
+from bot.utils.audio_to_text import STT
+from bot.utils.text_to_audio import TTS
 from bot.bot import bot
-
 
 from pathlib import Path
 import os
@@ -25,8 +24,11 @@ async def text_to_speech(message: Message):
         lang_data = await state.get_data()
         lang = lang_data.get('language', 'uk')
         
-        audio = TTS(message.text,lang)
-        await message.answer_voice(audio.text_to_audio())
+        try:
+            audio = TTS(message.text,lang)
+            return await message.answer_voice(audio)
+        except:
+            return await message.reply('Ви ввели не текст!')
         
            
 @router.message(Command(commands=['stt']))
@@ -34,7 +36,7 @@ async def speech_to_text(message: Message):
     await message.answer(text='Надішліть голосове повіломлення!')
     
     @router.message(Voice())
-    async def text(message: Message, state: FSMContext):      
+    async def text(message: Message, state: FSMContext): 
         file_id = message.voice.file_id
 
         lang_data = await state.get_data()
@@ -47,11 +49,16 @@ async def speech_to_text(message: Message):
         await bot.download_file(file_path, destination=str(file_on_disk))
         
         try:
-            txt = audio_to_text(file_on_disk, lang)
-            await message.reply(txt)
+            txt = STT(file_on_disk, lang)
+            return await message.reply(txt)
             
-            os.remove(file_on_disk)
         except:
-            await message.reply('Нажаль, обрана мова не підтримується для цієї функції \nСпробуйте обрати іншу')
+            return await message.reply('Нажаль, обрана мова не підтримується для цієї функції \nСпробуйте обрати іншу')
+            
+        finally:
             os.remove(file_on_disk)
-        
+            
+    @router.message(~Voice())
+    async def not_voice(message: Message):
+        await message.reply("Ви надіслали не голосове повідомлення.")
+            
