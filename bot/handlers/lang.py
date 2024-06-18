@@ -3,7 +3,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 
-from bot.states.lang import Lang
+from bot.states.stt_lang import SttLang
 from bot.keyboards import languages
 
 import pycountry
@@ -13,8 +13,17 @@ router = Router()
 
 @router.message(Command(commands=['langs']))
 async def langs(message: Message, state: FSMContext):
-    await state.set_state(Lang.waiting_for_language)
-    await message.answer('Мови, які Ви можете обрати для транскрибування: ', reply_markup=languages.as_markup(resize_keyboard=True))
+    await state.set_state(SttLang.waiting_for_language)
+    
+    state_data = await state.get_data()
+    selected_lang = state_data.get('lang', 'ua')
+    
+    if selected_lang == 'ua':
+        text = "Мови, які Ви можете обрати для транскрибування: "
+    elif selected_lang == 'en':
+        text = "Language that you can choose for transcriber: "
+    
+    await message.answer(text=text, reply_markup=languages.as_markup(resize_keyboard=True))
     
   
 @router.callback_query()

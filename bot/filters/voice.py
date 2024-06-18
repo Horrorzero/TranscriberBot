@@ -9,10 +9,10 @@ class Voice(Filter):
         return message.content_type == ContentType.VOICE
  
         
-class Checker(Filter):
+# class Checker(Filter):
     
-    def __init__(self,id:int):
-        self.id = id
+#     def __init__(self,id:int):
+#         self.id = id
          
-    async def __call__(self,  message:Message) -> bool:
-        return message.message_id-1 == self.id
+#     async def __call__(self,  message:Message) -> bool:
+#         return message.message_id-1 == self.id
