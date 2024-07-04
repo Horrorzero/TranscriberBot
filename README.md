@@ -1,12 +1,12 @@
 # TranscriberBot
 ![Some text](TranscriberBot-image.png)
 
----
+
 ## Description
-**The main purpose of bot is to convert speech to text
+**The main purpose of bot is to convert speech to text.
 Can be used for groups and for private messages**
 
----
+
 ## How to start?
 
 **To launch the bot you need:**
