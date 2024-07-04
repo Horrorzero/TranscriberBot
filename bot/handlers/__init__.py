@@ -2,7 +2,7 @@ from aiogram import Router
 
 from bot.handlers.start import router as start_router
 from bot.handlers.help import router as help_router
-from bot.handlers.stt_tts import router as stt_tts_router
+from bot.handlers.stt import router as stt_tts_router
 from bot.handlers.lang import router as lang_router
 from bot.handlers.checker import router as checker_router
 from bot.logger import get_logger
