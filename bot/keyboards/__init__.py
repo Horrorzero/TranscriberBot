@@ -3,12 +3,13 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 localization = InlineKeyboardBuilder()
-localization.adjust(2)
 
 lang_ua = InlineKeyboardButton(text='Українська', callback_data='lang_ua')
 lang_en = InlineKeyboardButton(text='English', callback_data='lang_en')
 
 localization.add(lang_ua,lang_en)
+
+localization.adjust(2)
 
 
 flags = {
@@ -31,11 +32,10 @@ flags = {
 }
 
 
-
 languages = InlineKeyboardBuilder()
-languages.adjust(4)
 
 
 for i in flags.keys():   
     languages.add(InlineKeyboardButton(text=flags[i], callback_data=f'{i}'))  
         
+languages.adjust(4)

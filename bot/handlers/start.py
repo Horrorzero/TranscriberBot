@@ -6,6 +6,7 @@ from aiogram.fsm.context import FSMContext
 from bot.keyboards import localization
 from bot.bot import bot
 from bot.states.lang import Lang
+from bot.utils.translations import translations
 
 
 
@@ -38,18 +39,11 @@ async def set_language(callback_query: CallbackQuery, state: FSMContext):
     selected_lang = callback_query.data.split('_')[1]
     await state.update_data(lang = selected_lang)
     
-    if selected_lang == 'ua':
-        lines = [
-            "Ви обрали українську мову.",
-            "Щоб отримати текст, надішліть голосове повідомлення.",
-            "Щоб ознайомитись з командами введіть команду /help.",
-        ]
-    elif selected_lang == 'en':
-        lines = [
-            "You have selected English.",
-            "To get the text, send a voice message.",
-            "To view the commands, enter the /help command.",
-        ]
-    
+    lines = [
+        translations[selected_lang]['lang_selected'],
+        translations[selected_lang]['send_voice'],
+        translations[selected_lang]['view_commands']
+    ]
+
     await callback_query.message.edit_text("\n".join(lines))
         
